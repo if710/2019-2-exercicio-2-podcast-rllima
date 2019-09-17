@@ -93,12 +93,16 @@ object Parser {
         return items
     }
 
+
     @Throws(XmlPullParserException::class, IOException::class)
     fun readItem(parser: XmlPullParser): ItemFeed {
         var title: String? = null
         var link: String? = null
         var pubDate: String? = null
         var description: String? = null
+        var downloadLink: String? = null
+        var imgUrl: String? = null
+        var durationTime:String? = null
         parser.require(XmlPullParser.START_TAG, null, "item")
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.eventType != XmlPullParser.START_TAG) {
@@ -113,11 +117,22 @@ object Parser {
                 pubDate = readData(parser, "pubDate")
             } else if (name == "description") {
                 description = readData(parser, "description")
-            } else {
+            } else if (name  == "enclosure"){
+                downloadLink = parser.getAttributeValue(null,"url")
+                skip(parser)
+            }else if (name == "itunes:image"){
+                imgUrl = parser.getAttributeValue(null,"href")
+                skip(parser)
+            }else if (name =="itune:duration"){
+                durationTime = readData(parser,"itunes:duration")
+                skip(parser)
+
+            }
+            else {
                 skip(parser)
             }
         }
-        return ItemFeed(title!!, link!!, pubDate!!, description!!, "carregar o link")
+        return ItemFeed(title!!, link!!, pubDate!!, description!!,downloadLink!!,imgUrl!!,durationTime!!)
     }
 
     // Processa tags de forma parametrizada no feed.
