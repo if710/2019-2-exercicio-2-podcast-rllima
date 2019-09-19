@@ -32,6 +32,7 @@ class ItemFeedAdapter (private val itemFeeds: List<ItemFeed>, private val ctx : 
 
         holder.title.setOnClickListener{
             val intent = Intent(ctx, EpisodeDetailActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             intent.putExtra("title",itemFeed.title)
             intent.putExtra("description",itemFeed.description)
             intent.putExtra("link",itemFeed.link)
