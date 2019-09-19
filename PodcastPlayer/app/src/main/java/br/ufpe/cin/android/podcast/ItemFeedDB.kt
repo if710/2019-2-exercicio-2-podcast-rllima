@@ -19,7 +19,7 @@ import br.ufpe.cin.android.podcast.ItemFeed
                         INSTANCE = Room.databaseBuilder(
                             ctx.applicationContext,
                             ItemFeedDB::class.java,
-                            "items_feed.db"
+                            "itemFeed.db"
                         ).build()
                     }
                 }

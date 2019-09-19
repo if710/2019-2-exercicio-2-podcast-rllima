@@ -25,16 +25,16 @@ class MainActivity : AppCompatActivity() {
             try{
                 var xml = URL("https://s3-us-west-1.amazonaws.com/podcasts.thepolyglotdeveloper.com/podcast.xml").readText()
                 itemFeedList = Parser.parse(xml)
-                uiThread {
-                    list.adapter = ItemFeedAdapter(itemFeedList, applicationContext)
-                }
+
                 db.itemFeedDao().addAll(itemFeedList)
 
             }catch (e:Throwable){
-                Log.e("ERRO",e.message.toString())
                 itemFeedList = db.itemFeedDao().all()
+                Log.e("ERRO",e.message.toString())
             }
-
+            uiThread {
+                list.adapter = ItemFeedAdapter(itemFeedList, applicationContext)
+            }
         }
     }
 }
