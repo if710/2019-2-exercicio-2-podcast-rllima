@@ -123,16 +123,12 @@ object Parser {
             }else if (name == "itunes:image"){
                 imgUrl = parser.getAttributeValue(null,"href")
                 skip(parser)
-            }else if (name =="itune:duration"){
-                durationTime = readData(parser,"itunes:duration")
-                skip(parser)
-
             }
             else {
                 skip(parser)
             }
         }
-        return ItemFeed(title!!, link!!, pubDate!!, description!!,downloadLink!!,imgUrl!!,durationTime!!)
+        return ItemFeed(title!!, link!!, pubDate!!, description!!,downloadLink!!,imgUrl!!)
     }
 
     // Processa tags de forma parametrizada no feed.
